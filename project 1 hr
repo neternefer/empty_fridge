@@ -1,0 +1,36 @@
+import requests
+
+def search_recipes(ingredient):
+    # Set the API endpoint and parameters
+    url = "https://api.edamam.com/search"
+    app_id = "2f5152e5"
+    app_key = "ffe81e3b539b9d8f5225b886b4ef7aa1"
+
+    # Make the API request
+    response = requests.get(url, params={"q": ingredient, "app_id": app_id, "app_key": app_key})
+
+    # Process the response his method converts the response content (usually in JSON format) into a Python dictionary or list, depending on the structure of the response. The converted data is then assigned to the variable
+    if response.status_code == 200:
+        data = response.json()
+        recipes = data["hits"]
+        for recipe in recipes:
+            # Extract relevant recipe information
+            recipe_name = recipe["recipe"]["label"]
+            recipe_url = recipe["recipe"]["url"]
+            recipe_ingredients = recipe["recipe"]["ingredientLines"]
+
+            # Display the recipe information
+            print(f"Recipe: {recipe_name}")
+            print(f"URL: {recipe_url}")
+            print("Ingredients:")
+            for ingredient in recipe_ingredients:
+                print("- " + ingredient)
+            print()
+    else:
+        print("Error:", response.status_code)
+
+# Prompt the user for an ingredient to search for
+ingredient = input("What ingredients do you have? ")
+
+# Search for recipes based on the provided ingredient
+search_recipes(ingredient)
