@@ -62,11 +62,21 @@ def view_recipe(url):
 
 
 def save_recipe(my_combo, my_list):
-    val, index = combo_select(my_combo)
-    with open(f'{val}.txt', 'w') as my_recipes:
-        recipe = f'{val}\n   -{my_list[index].get("url")} \n   -{my_list[index].get("diet")} \n   -{my_list[index].get("cuisine")[0]}\n\n'
-        my_recipes.write(recipe)
-
+  # Saves current recipe in the current folder
+  val, index = combo_select(my_combo)
+  with open(f'{val}.txt', 'w') as my_recipes:
+    recipe = f'{val} \n-URL: {my_list[index].get("recipe_url")}  \n'
+    if len(my_list[index].get("diet")) > 0:
+      recipe += '-Diet: '
+      for diet in my_list[index].get("diet"):
+        recipe += diet + ", "
+      recipe = recipe[:-2]
+      recipe += '\n'
+    recipe += f'-Cuisine: {my_list[index].get("cuisine")[0]} \n-Calories: {my_list[index].get("calories")} \n\n'
+    recipe += '- Ingredients:\n'
+    for ing in my_list[index].get("recipe_ingredients"):
+      recipe += f'\t-{ing}\n'
+    my_recipes.write(recipe)
 
 def enter_data():
     # if accepted, include search for nutrition facts in api call
