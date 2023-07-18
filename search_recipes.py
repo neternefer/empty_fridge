@@ -1,5 +1,3 @@
-import requests
-
 from helpers import exception_handler, show_message
 
 URL = "https://api.edamam.com/api/recipes/v2?type=public"
@@ -53,28 +51,10 @@ def search_recipes(ingredient, params_dict):
                 "calories": round(recipe["recipe"]["calories"], 2),
                 "small_img": recipe['recipe']['images']["SMALL"]['url']
             })
-        print(sorted(recipe_list, key=lambda d: d['recipe_name']))
+        # print(sorted(recipe_list, key=lambda d: d['recipe_name']))
         return sorted(recipe_list, key=lambda d: d['recipe_name'])
     else:
         show_message(message, "error")
         return []
 
 
-search_recipes("ham", {})
-# Prompt the user for inputs
-# ingredient = input("What ingredients do you have? ")
-# search_recipes(ingredient)
-# dietary_requirement = input("Do you have any dietary requirements?")
-# meal_type = input("Is it for breakfast, lunch, or dinner?")
-# cuisine_type = input("What cuisine would you like?")
-# # Call the function with appropriate arguments
-# if dietary_requirement.lower() == 'no':
-#     search_recipes(ingredient, None, meal_type, cuisine_type)
-# else:
-#     search_recipes(ingredient, dietary_requirement, meal_type, cuisine_type)
-#
-# # compile results and order
-# results = search_recipes(ingredient, dietary_requirement, meal_type,
-#                          cuisine_type)
-# # order by the recipe name alphabetically
-# results = sorted(results, key=lambda d: d['recipe_name'])
