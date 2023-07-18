@@ -23,7 +23,6 @@ def combo_select(my_combo):
 
 
 def create_link_btn(url):
-    # link_btn = tkinter.Button(recipe_frame, text="View recipe", command=lambda: view_recipe(url))
     link_btn = tkinter.Button(buttons_frame, text="View recipe", command=lambda: view_recipe(url))
     link_btn.grid(row=0, column=0, sticky="news", padx=20, pady=10)
 
@@ -35,7 +34,6 @@ def create_select_btn(my_combo, results, accepted):
 
 
 def create_save_btn(my_combo, my_list):
-    # save_btn = tkinter.Button(recipe_frame, text="Save recipe", command=lambda: save_recipe(my_combo, my_list))
     save_btn = tkinter.Button(buttons_frame, text="Save recipe", command=lambda: save_recipe(my_combo, my_list))
     save_btn.grid(row=1, column=0, sticky="news", padx=20, pady=10)
 
@@ -92,17 +90,14 @@ def add_recipe_img(url):
     img_label = tkinter.Label(result_frame, image=photo)
     img_label.image = photo
     img_label.grid(row=1, column=0, padx=5, pady=5)
-
-
-def add_welcome_screen():
-    img = ImageTk.PhotoImage(Image.open("wall.jpg"))
-    recipe_label["image"] = img
+    return img_label
 
 
 def enter_data():
     # if accepted, include search for nutrition facts in api call
     accepted = accept_var.get()
     ingredient = first_ingredient_entry.get()
+    combos = [diet_combobox, meal_combobox, cuisine_combobox, restrictions_combobox]
     inputs = {
         "dietLabels": [combo_select(diet_combobox)[0]],
         "mealType": combo_select(meal_combobox)[0],
@@ -121,6 +116,9 @@ def enter_data():
         else:
             recipe_label["text"] = 'No recipes were found. No, you can\'t eat salamanders'
             show_message('No recipes were found. No, you can\'t eat salamanders', "info")
+        first_ingredient_entry.delete(0, END)
+        for combo in combos:
+            combo.set("")
 
 
 # Tkinter setup
@@ -204,11 +202,6 @@ for widget in ingredients_frame.winfo_children():
 
 for widget in type_frame.winfo_children():
     widget.grid_configure(padx=15, pady=7.5)
-
-# calories_frame = tkinter.LabelFrame(interface_frame, text="Calories")
-# calories_frame.grid(row=3, columnspan=2, padx=5, pady=5)
-# calories_slider = Scale(calories_frame, from_=0, to=4000, orient=HORIZONTAL)
-# calories_slider.grid(row=0, columnspan=2, padx=25)
 
 # Left Frame third child with checkbox for nutrition facts
 terms_frame = tkinter.LabelFrame(interface_frame)
