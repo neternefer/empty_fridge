@@ -1,4 +1,3 @@
-import constants
 import requests
 from tkinter import *
 from tkinter import messagebox
@@ -56,5 +55,3 @@ def get_demo_data(url, params):
     dish = data["paths"]["/api/recipes/v2"]["get"]["parameters"][11]["items"]["enum"]
     return diet, health, cuisine, meal, dish, message
 
-
-get_demo_data(DEMO_URL, {})
